@@ -5,6 +5,12 @@ VisualStudioVersion = 17.7.34018.315
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContasApp.Presentation", "ContasApp.Presentation\ContasApp.Presentation.csproj", "{8812A9DA-7CF9-4271-A73C-57E4A8C29BC4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1 - Presentation Layer", "1 - Presentation Layer", "{1DA8467F-34C2-4563-BB9D-CB02931D1481}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2 - Data Access Layer", "2 - Data Access Layer", "{891F3AB9-7768-48F0-B99D-566BD1E0ACAD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContasApp.Data", "ContasApp.Data\ContasApp.Data.csproj", "{13EB1CE8-1CED-40BE-8737-646C729859DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +21,17 @@ Global
 		{8812A9DA-7CF9-4271-A73C-57E4A8C29BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8812A9DA-7CF9-4271-A73C-57E4A8C29BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8812A9DA-7CF9-4271-A73C-57E4A8C29BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13EB1CE8-1CED-40BE-8737-646C729859DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13EB1CE8-1CED-40BE-8737-646C729859DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13EB1CE8-1CED-40BE-8737-646C729859DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13EB1CE8-1CED-40BE-8737-646C729859DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8812A9DA-7CF9-4271-A73C-57E4A8C29BC4} = {1DA8467F-34C2-4563-BB9D-CB02931D1481}
+		{13EB1CE8-1CED-40BE-8737-646C729859DD} = {891F3AB9-7768-48F0-B99D-566BD1E0ACAD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {519ECE22-5E12-4DCB-A765-7FE71F40DA18}
