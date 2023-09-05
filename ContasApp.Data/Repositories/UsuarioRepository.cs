@@ -22,7 +22,7 @@ namespace ContasApp.Data.Repositories
         {
             var query = @"
                 INSERT INTO USUARIO (ID, NOME, EMAIL, SENHA, DATAHORACRIACAO)
-                VALUES (@Id, @Nome, @Email, @Senha, @DataHoraCriacao)
+                VALUES (@Id, @Nome, @Email, @Senha, @DataCriacao)
             ";
 
             // abrindo conexão com o banco de dados 
