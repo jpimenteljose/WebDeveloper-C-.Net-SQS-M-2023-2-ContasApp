@@ -22,7 +22,8 @@ namespace ContasApp.Data.Repositories
         {
             var query = @"
                 INSERT INTO USUARIO (ID, NOME, EMAIL, SENHA, DATAHORACRIACAO)
-                VALUES (@Id, @Nome, @Email, @Senha, @DataCriacao)
+                VALUES (@Id, @Nome, @Email, 
+                        CONVERT(VARCHAR(32), HASHBYTES('MD5', @Senha), 2), @DataCriacao)
             ";
 
             // abrindo conexão com o banco de dados 
@@ -40,8 +41,8 @@ namespace ContasApp.Data.Repositories
         {
             var query = @"
                 UPDATE USUARIO 
-                SET NOME=@Nome, EMAIL=@Email, SENHA=@Senha
-                WHERE ID=@Id
+                SET    NOME=@Nome, EMAIL=@Email
+                WHERE  ID=@Id
             ";
 
             // abrindo conexão com o banco de dados 
@@ -53,13 +54,33 @@ namespace ContasApp.Data.Repositories
         }
 
         /// <summary>
+        /// Método para atualizar somente a senha de um usuário no banco de dados
+        /// </summary>
+        public void UpdatePassowrd(Guid idUsuario, string senha)
+        {
+            var query = @"
+                UPDATE USUARIO 
+                SET    SENHA=CONVERT(VARCHAR(32), HASHBYTES('MD5', @Senha), 2)
+                WHERE  ID=@IdUsuario
+            ";
+
+            // abrindo conexão com o banco de dados 
+            using (var connection = new SqlConnection(SqlServerSettings.GetConnectionString()))
+            {
+                // executando o comando SQL no banco de dados
+                connection.Execute(query, new { @IdUsuario = idUsuario, @Senha = senha });
+            }
+        }
+
+
+        /// <summary>
         /// Método para excluir um usuário no banco de dados
         /// </summary>
         public void Delete(Usuario usuario)
         {
             var query = @"
                 DELETE FROM USUARIO 
-                WHERE ID=@Id
+                WHERE  ID=@Id
             ";
 
             // abrindo conexão com o banco de dados 
@@ -110,7 +131,7 @@ namespace ContasApp.Data.Repositories
         public Usuario? GetByEmailAndSenha(string email, string senha)
         {
             var query = @"
-                SELECT * FROM USUARIO WHERE EMAIL=@Email AND SENHA=@Senha
+                SELECT * FROM USUARIO WHERE EMAIL=@Email AND SENHA=CONVERT(VARCHAR(32), HASHBYTES ('MD5', @Senha), 2)
             ";
 
             // abrindo conexão com o banco de dados 
