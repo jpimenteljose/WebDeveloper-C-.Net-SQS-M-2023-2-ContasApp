@@ -84,7 +84,40 @@ namespace ContasApp.Presentation.Controllers
         [HttpPost]
         public IActionResult Consulta(ContasConsultaViewModel model)
         {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    // capturando o usuário autenticado no sistema
+                    var usuario = JsonConvert.DeserializeObject<Usuario>(User.Identity.Name);
 
+                    // consultar as contas do usuário
+                    var contasRepository = new ContaRepository();
+                    var contas = contasRepository.GetByDatasAndUsuario(model.DataInicio.Value,
+                        model.DataFim.Value, usuario.Id);
+                        
+                    if(contas.Count > 0) // se a consulta teve resultados
+                    {
+                        ViewBag.Contas = contas; // enviando a lista de contas para a página
+                    }
+                    else
+                    {
+                        TempData["MensagemAlerta"] = "Nenhuma conta foi encontrada" +
+                            "para o período de datas selecionados.";
+                    }
+                }
+                catch(Exception e)
+                {
+                    TempData["MensagemErro"] = e.Message;
+                }
+            }
+            else
+            {
+                TempData["MensagemAlerta"] = "Ocorreram erros no preenchimento do" +
+                    "formulário de consulta, por favor verifique.";
+            }
+
+            return View();
         }
 
         /// <summary>

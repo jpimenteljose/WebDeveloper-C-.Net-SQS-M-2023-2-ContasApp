@@ -68,7 +68,7 @@ namespace ContasApp.Data.Repositories
             var query = @"
                 SELECT * 
                 FROM   CONTA
-                WHERE  USUARIO = @UsuarioId
+                WHERE  USUARIOID = @UsuarioId
                 AND    DATA BETWEEN @DataInicio AND @DataFim
                 ORDER  BY DATA DESC
             ";
