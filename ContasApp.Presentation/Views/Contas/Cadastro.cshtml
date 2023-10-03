@@ -1,4 +1,7 @@
-﻿@{
+﻿@* Definindo a classe de modelo desta página *@
+@model ContasApp.Presentation.Models.ContasCadastroViewModel
+
+@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -6,46 +9,63 @@
 <p>Faça o cadastro de suas contas para gerenciar suas finanças.</p>
 <hr/>
 
-<form>
-   
+@using(Html.BeginForm())
+{
     <div class="row mb-2">
         
         <div class="col">
             <label>Nome da conta:</label>
-            <input type="text" class="form-control"/>
+            @Html.TextBoxFor(contas => contas.Nome, new { @class = "form-control" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Nome)
+            </span>
         </div>
 
         <div class="col">
             <label>Data da conta:</label>
-            <input type="text" class="form-control" />
+            @Html.TextBoxFor(contas => contas.Data, new { @class = "form-control", @type = "date" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Data)
+            </span>
         </div>
 
         <div class="col">
             <label>Valor da conta:</label>
-            <input type="text" class="form-control" />
+            @Html.TextBoxFor(contas => contas.Valor, new { @class = "form-control" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Valor)
+            </span>
         </div>
 
         <div class="col">
             <label>Tipo da Conta:</label>
             <div>
-                <input type="radio" name="tipo"/> Contas a Receber
+                @Html.RadioButtonFor(model => model.Tipo, 1) Contas a Receber
             </div>
             <div>
-                <input type="radio" name="tipo"/> Contas a Pagar
+                @Html.RadioButtonFor(model => model.Tipo, 2) Contas a Pagar
             </div>
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Tipo)
+            </span>
         </div>
     </div>
 
     <div class="row mb-2">
         <div class="col">
             <label>Selecione a categoria da Conta:</label>
-            <select class="form-select">
-                <option value="">Escolha uma opção</option>
-            </select>
+            @Html.DropDownListFor(model => model.CategoriaId, ViewBag.Categorias as List<SelectListItem>,
+                "Escolha uma opção:", new { @class = "form-select" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.CategoriaId)
+            </span>
         </div>
         <div class="col">
             <label>Observações da Conta:</label>
-            <textarea class="form-control"></textarea>
+            @Html.TextAreaFor(model => model.Observacoes, new { @class = "form-control" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.Observacoes)
+            </span>
         </div>
     </div>
 
@@ -56,4 +76,4 @@
         </div>
     </div>
         
-</form>
+}

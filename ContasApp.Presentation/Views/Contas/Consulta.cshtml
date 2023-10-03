@@ -1,4 +1,7 @@
-﻿@{
+﻿@* Definindo a classe de modelo de dados da página*@
+@model ContasApp.Presentation.Models.ContasConsultaViewModel
+
+@{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -10,10 +13,16 @@
 
     <div class="row mb-2">
         <div class="col">
-            <input type="date" class="form-control" />
+            @Html.TextBoxFor(model => model.DataInicio, new { @class="form-control", @type="date" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.DataInicio)
+            </span>
         </div>
         <div class="col">
-            <input type="date" class="form-control" />
+            @Html.TextBoxFor(model => model.DataFim, new { @class="form-control", @type="date" })
+            <span class="text-danger">
+                @Html.ValidationMessageFor(model => model.DataFim)
+            </span>
         </div>
         <div class="col">
             <div>
