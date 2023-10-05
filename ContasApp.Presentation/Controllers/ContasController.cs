@@ -75,7 +75,30 @@ namespace ContasApp.Presentation.Controllers
         /// </summary>
         public IActionResult Consulta()
         {
-            return View();
+            var model = new ContasConsultaViewModel();
+
+            try
+            {
+                var qtdDiasMesAtual = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month);
+                
+                //primeiro dia do mês atual
+                model.DataInicio = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+                model.DataFim = new DateTime(DateTime.Today.Year, DateTime.Today.Month, qtdDiasMesAtual);
+
+                //capturando o usuário autenticado no sistema
+                var usuario = JsonConvert.DeserializeObject<Usuario>(User.Identity.Name);
+
+                //consultando as contas do usuário no banco de dados
+                var contaRepository = new ContaRepository();
+                ViewBag.Contas = contaRepository.GetByDatasAndUsuario
+                    (model.DataInicio.Value, model.DataFim.Value, usuario.Id);
+            }
+            catch (Exception e)
+            {
+                TempData["MensagemErro"] = e.Message;
+            }
+
+            return View(model);
         }
 
         /// <summary>
