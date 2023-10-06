@@ -50,7 +50,7 @@ namespace ContasApp.Data.Repositories
         {
             // escrevendo o comando SQL
             var query = @"
-                DELETE FOM CONTA
+                DELETE FROM CONTA
                 WHERE ID = @Id
             ";
 

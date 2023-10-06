@@ -152,6 +152,33 @@ namespace ContasApp.Presentation.Controllers
         }
 
         /// <summary>
+        /// Método para processar a ação de exclusão de /Contas/Exclusao
+        /// </summary>
+        public IActionResult Exclusao(Guid id)
+        {
+            try
+            {
+                var contaRepository = new ContaRepository();
+
+                // buscando a conta no banco de dados através do ID
+                var conta = contaRepository.GetById(id);
+
+                // excluindo a conta
+                contaRepository.Delete(conta);
+
+                TempData["MensagemSucesso"] = $"Conta '{conta.Nome}', excluído com sucesso.";
+
+            }
+            catch(Exception e)
+            {
+                TempData["MensagemErro"] = e.Message;
+            }
+
+            // redirecionando para a página de consulta
+            return RedirectToAction("Consulta");
+        }
+
+        /// <summary>
         /// Método para gerar uma lista de categorias para preencher um campo DropDownList na página
         /// </summary>
         public List<SelectListItem> ObterCategorias()

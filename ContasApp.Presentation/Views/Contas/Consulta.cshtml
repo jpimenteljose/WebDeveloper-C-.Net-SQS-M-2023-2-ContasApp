@@ -79,8 +79,9 @@
                             <td>@item.Nome</td>
                             <td></td>
                             <td>
-                                <button class="btn btn-sm btn-outline-primary">Editar</button>
-                                <button class="btn btn-sm btn-outline-danger">Excluir</button>
+                                <a href="#" class="btn btn-sm btn-outline-primary">Editar</a>
+                                <a href="/Contas/Exclusao/@item.Id" onclick="return confirm('Deseja realmente excluir esta conta?');"
+                                    class="btn btn-sm btn-outline-danger">Excluir</a>
                             </td>
                         </tr>
                     }
