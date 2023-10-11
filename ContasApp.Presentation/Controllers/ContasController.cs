@@ -146,9 +146,79 @@ namespace ContasApp.Presentation.Controllers
         /// <summary>
         /// Método para abrir a página /Contas/Edicao
         /// </summary>
-        public IActionResult Edicao()
+        public IActionResult Edicao(Guid id)
         {
-            return View();
+            var model = new ContasEdicaoViewModel();
+
+            try
+            {
+                // buscar a conta no repositório através do ID
+                var contaRepository = new ContaRepository();
+                var conta = contaRepository.GetById(id);
+
+                // preencher o objeto 'model' com os dados da conta
+                model.Id = conta.Id;
+                model.Nome = conta.Nome;
+                model.Data = conta.Data;
+                model.Valor = conta.Valor;
+                model.Tipo = conta.Tipo;
+                model.Observacoes = conta.Observacoes;
+                model.CategoriaId = conta.CategoriaId;
+
+                // gerando os dados das categorias
+                ViewBag.Categorias = ObterCategorias();
+
+            }
+            catch(Exception e)
+            {
+                TempData["MensagemErro"] = e.Message;
+            }
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Método para capturar o SUBMIT POST da página /Contas/Edicao
+        /// </summary>
+        [HttpPost]
+        public IActionResult Edicao(ContasEdicaoViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                try
+                {
+                    var conta = new Conta
+                    {
+                        Id = model.Id,
+                        Nome = model.Nome,
+                        Data = model.Data.Value,
+                        Valor = model.Valor.Value,
+                        Tipo = model.Tipo.Value,
+                        Observacoes = model.Observacoes,
+                        CategoriaId = model.CategoriaId.Value
+                    };
+
+                    // atuailzando a conta no banco de dados
+                    var contaRepository = new ContaRepository();
+                    contaRepository.Update(conta);
+
+                    TempData["MensagemSucesso"] = $"Conta '{conta.Nome}', atualizada com sucesso.";
+
+                    // redirecionando para a página de consulta
+                    return RedirectToAction("Consulta");
+                }
+                catch(Exception e)
+                {
+                    TempData["MensagemErro"] = e.Message;
+                }
+            }
+            else
+            {
+                TempData["MensagemAlerta"] = "Ocorreram erros de validação no preenchimento do formulário de edição.";
+            }
+
+            ViewBag.Categorias = ObterCategorias();
+                return View(model);
         }
 
         /// <summary>

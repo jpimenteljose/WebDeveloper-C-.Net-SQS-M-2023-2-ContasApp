@@ -33,8 +33,13 @@ namespace ContasApp.Data.Repositories
         {
             // escrevendo o comando SQL
             var query = @"
-                UDATE CONTA
-                SET   NOME = @Nome, DATA = @Data, VALOR = @Valor, TIPO = @Tipo, OBSERVACOES = @Observacoes, CATEGORIAID = @CategoriaId
+                UPDATE CONTA
+                SET NOME = @Nome, 
+                    DATA = @Data, 
+                    VALOR = @Valor, 
+                    TIPO = @Tipo, 
+                    OBSERVACOES = @Observacoes,     
+                    CATEGORIAID = @CategoriaId
                 WHERE ID = @Id
             ";
 

@@ -50,6 +50,11 @@
 
                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown">
                            <li>
+                               <a class="dropdown-item" href="/Usuarios/AlterarSenha">
+                                    Alterar Senha de Acesso      
+                               </a>
+                           </li> 
+                           <li>
                                <a class="dropdown-item" 
                                   href="/Account/Logout"
                                   onclick="return confirm('Deseja realmente sair do sistema?');">
@@ -100,6 +105,10 @@
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/jquery-3.7.0.min.js"></script>
     <script src="/js/dataTables.min.js"></script>
+    <script src="/js/highcharts.js"></script>
+
+    <!-- seção para que outras páginas possam inserir conteúdo JavaScript -->
+    @RenderSection("scripts", required: false)
 
     <!-- função para ativar o jquery datatables -->
     <script>
