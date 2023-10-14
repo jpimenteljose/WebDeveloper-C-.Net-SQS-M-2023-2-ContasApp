@@ -17,7 +17,11 @@ namespace ContasApp.Data.Settings
         /// </summary>
         public static string GetConnectionString()
         {
-            return "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BDContasApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            // Banco local
+            //return "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=BDContasApp;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            
+            // Banco MyAsp.Net
+            return "Data Source=SQL5111.site4now.net;Initial Catalog=db_aa0265_contasapp;User Id=db_aa0265_contasapp_admin;Password=Coti123@";
         }
     }
 }
