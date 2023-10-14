@@ -5,7 +5,7 @@ namespace ContasApp.Presentation.Models
     /// <summary>
     /// Modelo de dados para a página de alteração de senha do usuário
     /// </summary>
-    public class UsuariosAlterarSenhaModel
+    public class UsuariosAlterarSenhaViewModel
     {
         [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,}$",
             ErrorMessage = "Informe uma senha com letras maísculas, letras minúsculas, números, símbolos e no mínimo 8 caracteres.")]

@@ -72,8 +72,9 @@ namespace ContasApp.Data.Repositories
             // escrevendo o comando SQL
             var query = @"
                 SELECT * 
-                FROM   CONTA
-                WHERE  USUARIOID = @UsuarioId
+                FROM   CONTA CO
+                INNER JOIN CATEGORIA CA ON (CO.CATEGORIAID = CA.ID)
+                WHERE  CO.USUARIOID = @UsuarioId
                 AND    DATA BETWEEN @DataInicio AND @DataFim
                 ORDER  BY DATA DESC
             ";
@@ -81,8 +82,18 @@ namespace ContasApp.Data.Repositories
             // conectando com o banco de dados do SQL Server
             using (var connection = new SqlConnection(SqlServerSettings.GetConnectionString()))
             {
-                return connection.Query<Conta>(query, 
-                    new { @UsuarioId = UsuarioId, @DataInicio = dataInicio, @DataFim = dataFim }).ToList();
+                return connection.Query(query, 
+                    (Conta co, Categoria ca) =>
+                    {
+                        co.Categoria = ca;
+                        return co;
+                    },
+                    new { @UsuarioId = UsuarioId, 
+                          @DataInicio = dataInicio, 
+                          @DataFim = dataFim 
+                    },
+                    splitOn: "CategoriaId")
+                    .ToList();
             }
         }
 

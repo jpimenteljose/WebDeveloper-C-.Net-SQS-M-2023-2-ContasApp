@@ -77,7 +77,7 @@
                                 }
                             </td>
                             <td>@item.Nome</td>
-                            <td></td>
+                            <td>@item.Categoria?.Descricao</td>
                             <td>
                                 <a href="/Contas/Edicao/@item.Id" class="btn btn-sm btn-outline-primary">Editar</a>
                                 <a href="/Contas/Exclusao/@item.Id" onclick="return confirm('Deseja realmente excluir esta conta?');"

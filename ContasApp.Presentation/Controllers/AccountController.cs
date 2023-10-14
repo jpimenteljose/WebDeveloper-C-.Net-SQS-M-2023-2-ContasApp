@@ -1,5 +1,6 @@
 ﻿using ContasApp.Data.Entities;
 using ContasApp.Data.Repositories;
+using ContasApp.Presentation.Helpers;
 using ContasApp.Presentation.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -129,6 +130,68 @@ namespace ContasApp.Presentation.Controllers
         /// </summary>
         public IActionResult ForgotPassword()
         {
+            return View();
+        }
+
+        /// <summary>
+        /// Método para capturar o SUBMIT POST da página /Account/ForgotPassword
+        /// </summary>
+        [HttpPost]
+        public IActionResult ForgotPassword(AccountForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid) 
+            {
+                try
+                {
+                    // buscar o usuário no bando de dados através do email
+                    var usuarioRepository = new UsuarioRepository();
+                    var usuario = usuarioRepository.GetByEmail(model.Email);
+
+                    // verificando se o usuário foi encontrato
+                    if(usuario != null)
+                    {
+                        // gerando a nova senha para o usuário
+                        var novaSenha = PasswordHelper.GeneratePassword(true, true, true, true, 10);
+
+                        // escrevendo o email para o usuário
+                        var subject = "Recuperação de senha de usuário - COTI Informática";
+
+                        var body = $@"
+                            <div style='padding: 40px; margin: 40px; border: 
+                                1px solid #ccc; text-align: center;'>
+                                <img 
+                                    src='https://www.cotiinformatica.com.br/imagens/logo-coti-informatica.png'/>
+                                <hr/>
+                                <h5>Olá {usuario.Nome}</h5>
+                                <p>Uma nova senha de acesso foi gerada para você.</p>
+                                <p>Acesse o sistema com a senha: 
+                                {novaSenha}</p>
+                                <br/>
+                                <p>Att, equipe COTI Informática</p>
+                            </div>
+                        ";
+                        
+                        // enviando o email para o usuário
+                        EmailMessageHelper.SendMessage(usuario.Email, subject, body);
+
+                        // atualizando a senha no banco de dados
+                        usuarioRepository.UpdatePassowrd(usuario.Id, novaSenha);
+
+                        TempData["Mensagem"] = "Recuperação de senha realizada com sucesso.";
+
+                        ModelState.Clear();
+                    }
+                    else
+                    {
+                        TempData["Mensagem"] = "Usuário não encontrado.";
+                    }
+                                                                                                                                                                                                                                                                                                                                                                                                                               }
+                catch(Exception e)
+                {
+                    TempData["Mensagem"] = e.Message;
+                }
+            }
+            
             return View();
         }
 

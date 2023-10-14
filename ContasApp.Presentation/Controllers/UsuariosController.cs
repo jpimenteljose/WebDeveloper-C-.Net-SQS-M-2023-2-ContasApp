@@ -18,7 +18,7 @@ namespace ContasApp.Presentation.Controllers
 
         // Método para capturar o SUBMIT POST da página /Usuarios/AlterarSenha
         [HttpPost]
-        public IActionResult AlterarSenha(UsuariosAlterarSenhaModel model)
+        public IActionResult AlterarSenha(UsuariosAlterarSenhaViewModel model)
         {
             if(ModelState.IsValid)
             {
